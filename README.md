@@ -1,18 +1,24 @@
-# Github_Notifier
+# Github-Notifier
 
-## Introduction
+## Application Overview:
 
-This project is a webhook event handler that integrates with Discord, Slack, and GitHub. It processes webhook events from GitHub, sends messages to Discord and Slack channels, and handles GitHub GraphQL API queries to fetch additional details about issues and pull requests. The project is written in Go and leverages various APIs to facilitate communication between the services.
+This application is a webhook event handler integrating with Discord, Slack, and GitHub. It processes webhook events from GitHub, communicates with Discord and Slack channels, and performs GitHub GraphQL API queries to fetch additional information regarding issues and pull requests. Built in Go, the application efficiently leverages these APIs to facilitate interaction between services.
 
-## Setup:
-#### Prerequisites:
-    
+## Why use it?
+
+This application offers a simplified setup and configuration process that integrates key communication platforms (Discord, Slack) with GitHub for seamless notifications and event handling. With a few simple steps, you can have your webhooks set up and running, making your development workflow more efficient.
+
+## Prerequisites:
+
+To deploy and use the webhook handler, ensure the following requirements are met:
+
     Go (1.16 or later)
     GitHub, Discord, and Slack accounts with the necessary permissions
     Configuration file (config.json)
 
-#### Configuration:
-Create a config.json file in the root directory of your project with the following structure:
+## Configuration:
+
+Before starting, create a config.json file in the root directory with the following structure:
 
     {
         "discord_bot_token": "YOUR_DISCORD_BOT_TOKEN",
@@ -22,7 +28,9 @@ Create a config.json file in the root directory of your project with the followi
         "slack_oauth_token": "YOUR_SLACK_OAUTH_TOKEN"
     }
 
-Replace YOUR_DISCORD_BOT_TOKEN, YOUR_DISCORD_CHANNEL_ID, YOUR_GITHUB_OAUTH_TOKEN, YOUR_SLACK_CHANNEL_ID, and YOUR_SLACK_OAUTH_TOKEN with your actual tokens and IDs.
+Ensure the actual tokens and IDs replace placeholder values.
+
+## Setting up Discord:
 
 Adding Discord Bot Token:
 
@@ -35,7 +43,7 @@ Adding Discord Bot Token:
  ![Discord Oauth pt 2](images/discord2.jpg)
 
 
-Adding Slack Token
+## Setting up Slack:
 
  1. Go to the Slack API: Applications and create a new application.
  2. Navigate to the "OAuth & Permissions" section and add the necessary scopes for your bot.
@@ -46,9 +54,9 @@ Adding Slack Token
  ![Slack Oauth pt 1](images/slack1.jpg)
  ![Slack Oauth pt 1](images/slack2.jpg)
 
-### Installation
+## Installation
 
- Clone the repository:
+  Clone the project repository and navigate to the directory:
  
     git clone https://github.com/yourusername/webhook-event-handler.git
     cd webhook-event-handler
@@ -67,32 +75,31 @@ Start the server by running the following command:
 
     go run main.go
 
-Setting Up Local Endpoint for Testing
+## Testing and Local Endpoint Setup:
 
- 1. To create a local endpoint that can be accessed from the internet for testing purposes, you can use Pinggy:
- 2. Sign up for a Pinggy account and install the Pinggy CLI.
- 3. Run the following command to set up a local endpoint:
+For local testing, you can create an endpoint accessible over the internet using Pinggy:
+
+ 1. Sign up for a Pinggy account and install the Pinggy CLI.
+ 2. Run the following command to set up a local endpoint:
 
         ssh -p 443 -L4300:localhost:4300 -R0:localhost:3000 a.pinggy.io
 
-  This command creates a local endpoint for a 1-hour window. Replace localhost:3000 with the address and port your webhook handler is running on if different.
+  This command creates a local endpoint for a 1-hour window.
 
-Setting up Github Webhook:
+## Setting up Github Webhook:
 
- 1. Navigate to your GitHub repository, click on "Settings", and then "Webhooks".
- 2. Click on "Add webhook".
- 3. In the "Payload URL" field, enter your server's address: http://your-server-address:8080/webhook
- 4. Replace http://your-server-address:8080 with your actual server address or the Pinggy URL provided for testing.
- 5. Set the "Content type" to application/json.
- 6. Select the individual events you want to receive or choose "Send me everything".
- 7. Click "Add webhook".
+To integrate GitHub:
+
+ 1. Go to the "Settings" of your GitHub repository, then "Webhooks."
+ 2. Add the webhook by entering the payload URL in the format: http://your-server-address:8080/webhook.
+ 3. Select "application/json" as the content type, then choose the events to send.
 
   ![Github webhook](images/webhook.jpg)
 
 
-## Handling Events
+## Event Handling:
 
-The webhook event handler processes different types of GitHub events and sends notifications to the configured Discord and Slack channels. The supported event types are:
+The handler supports the following GitHub events:
 
     push
     pull request
@@ -102,17 +109,17 @@ The webhook event handler processes different types of GitHub events and sends n
 
 Example:
 
- Push Event: When a push event is received, including branch creation or deletion events, the handler constructs a message and sends it to the configured Discord and Slack channels.
- Pull Request Event: For pull request events, the handler queries the GitHub GraphQL API to get additional details and sends the information to the channels.
- Issue Event: Similar to pull request events, issue events are processed by querying the GitHub GraphQL API and sending the details to the channels.
+    Push Event: When a push event is received, including branch creation or deletion events, the handler constructs a message and sends it to the configured Discord and Slack channels.
+    Pull Request Event: For pull request events, the handler queries the GitHub GraphQL API to get additional details and sends the information to the channels.
+    Issue Event: Similar to pull request events, issue events are processed by querying the GitHub GraphQL API and sending the details to the channels.
 
- ![discord demo](images/discorddemo.jpg)
+ ![discord demo](images/discordemo.jpg)
  ![slack demo](images/slackdemo.jpg)
 
-### Logs
+## Logs:
 
-The handler logs the processing of tasks and results. You can view these logs in the terminal where the server is running.
+You can track webhook activities and events via logs in the terminal where the service runs.
 
-### Error Handling
+## Error Handling:
 
-If there are any errors during the processing of tasks or sending messages, the handler logs the errors and continues processing the next tasks.
+If any errors occur during webhook processing or while sending notifications, they will be logged, and the handler will continue processing subsequent events.
